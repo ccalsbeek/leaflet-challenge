@@ -5,6 +5,7 @@ var lightMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
     maxZoom: 18,
+    zoomOffset: -1,
     id: "mapbox/streets-v11",
     accessToken: api_key
 });
@@ -17,18 +18,18 @@ var lightMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/
 //     accessToken: api_key
 // });
 
-var satMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-    attribution:  "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    tileSize: 512,
-    maxZoom: 18,
-    id: "satellite-v9",
-    accessToken: api_key
-});
+// var satMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+//     attribution:  "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+//     tileSize: 512,
+//     maxZoom: 18,
+//     id: "satellite-v9",
+//     accessToken: api_key
+// });
 
 var map = L.map("map", {
     center: [38.58, 121.49],
     zoom: 3,
-    layers: [lightMap, satMap]
+    layers: [lightMap]
 });
 
 
@@ -41,7 +42,7 @@ var tectMap = new L.LayerGroup();
 var baseMaps = {
     Light: lightMap,
     // Dark: darkMap,
-    Satellite: satMap
+    // Satellite: satMap
 };
 
 var olMaps = {
@@ -56,8 +57,8 @@ d3.json(url1, function(data) {
 
     function getStyle(feature) {
         return {
-            radius: feature.properties.magnitude * 4,
-            fillColor: getColors(feature.properties.magnitude),
+            radius: feature.properties.mag * 4,
+            fillColor: getColors(feature.properties.mag),
             color: "#000000",
             weight: 1,
             opacity: 1,
@@ -137,4 +138,3 @@ d3.json(url1, function(data) {
     });
 
 });
-
