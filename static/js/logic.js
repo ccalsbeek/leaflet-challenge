@@ -127,8 +127,8 @@ d3.json(url1, function(data) {
 
     legend.addTo(map);
 
-    d3.json(url2, function(tectMap) {
-        L.geoJson(tectMap, {
+    d3.json(url2, function(data) {
+        L.geoJson(data, {
             color: "green",
             weight: 2
         })
