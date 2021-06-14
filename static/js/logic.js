@@ -148,6 +148,7 @@ d3.json(url1, function(data) {
 
     legend.addTo(map);
 
+    //add tectonic plate layer data
     d3.json(url2, function(data) {
         L.geoJson(data, {
             color: "navy",
@@ -155,6 +156,7 @@ d3.json(url1, function(data) {
         })
         .addTo(tectMap);
 
+        //add plate layer to map
         tectMap.addTo(map);
     });
 
