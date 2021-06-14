@@ -46,9 +46,9 @@ var tectMap = new L.LayerGroup();
 
 //define map object
 var baseMaps = {
-    Light: lightMap,
+    Satellite: satMap,
     Dark: darkMap,
-    Satellite: satMap
+    Light: lightMap
 };
 
 //define overlay object
@@ -65,12 +65,13 @@ d3.json(url1, function(data) {
     //define function to stylize earthquake data onto map
     function getStyle(feature) {
         return {
-            radius: feature.properties.mag * 4,
+            radius: getSize(feature.properties.mag),
             fillColor: getColors(feature.properties.mag),
             color: "#000000",
-            weight: 1,
+            weight: 0.5,
             opacity: 1,
-            fillOpacity: 0.8
+            fillOpacity: 1,
+            stroke: true
         };
     }
     //define function to assign colors to earthquake markers based on magnitude
@@ -111,13 +112,13 @@ d3.json(url1, function(data) {
         onEachFeature: function(feature, layer) {
             layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place)
         }
-        //add data to quake layer
+    //add data to quake layer
     }).addTo(quakeMap);
 
     //add quake layer to map
     quakeMap.addTo(map)
 
-    //create legend control object
+    //create legend
     var legend = L.control({
         position: "bottomright"
     });
@@ -127,7 +128,7 @@ d3.json(url1, function(data) {
         var div = L
             .DomUtil
             .create("div", "info legend");
-            
+        
         var grades = [0, 1, 2, 3, 4, 5];
         var colors = [
             "#03448B",
@@ -139,8 +140,7 @@ d3.json(url1, function(data) {
         ];
 
         for (var i = 0; i < grades.length; i++) {
-            div.innerHTML +=
-                "<i style='background: " + colors[i] + "'></i> " +
+            div.innerHTML += "<i style='background: " + colors[i] + "'></i> " +
                 grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
         }
         return div;
@@ -150,7 +150,7 @@ d3.json(url1, function(data) {
 
     d3.json(url2, function(data) {
         L.geoJson(data, {
-            color: "green",
+            color: "navy",
             weight: 2
         })
         .addTo(tectMap);
